@@ -35,8 +35,9 @@ function nuevaTarea(tarea){
             try{ 
                 
                 
-                let [{id}] =await conexion `INSERT INTO tareas (tarea) VALUES (${tarea}) RETURNING id`;
+                let [{id}] =await conexion `INSERT INTO tareas (tarea) VALUES (${tarea}) RETURNING id `;
                 conexion.end();
+
                 ok(id);
 
             }catch(error){ //si falla, la rechaza
@@ -46,6 +47,61 @@ function nuevaTarea(tarea){
         ;
     });
 }
+
+
+function borrarTarea(id){
+    return new Promise(async (ok,ko)=>{
+        const conexion = conectar();//se conecta
+            try{ 
+                
+                
+                let {count} =await conexion `DELETE FROM tareas WHERE id = ${id}`;
+                conexion.end();
+                ok(count);
+
+            }catch(error){ //si falla, la rechaza
+                ko({error : "error en base de datos"});
+
+            }
+        ;
+    });
+}
+
+function actualizarEstado(id){
+    return new Promise(async (ok,ko)=>{
+        const conexion = conectar();//se conecta
+            try{ 
+                
+                
+                let {count} =await conexion `UPDATE tareas SET terminada = NOT terminada  WHERE id = ${id}`;
+                conexion.end();
+                ok(count);
+
+            }catch(error){ //si falla, la rechaza
+                ko({error : "error en base de datos"});
+
+            }
+        ;
+    });
+}
+function actualizarTexto(id,texto){
+    return new Promise(async (ok,ko)=>{
+        const conexion = conectar();//se conecta
+            try{ 
+                
+                
+                let {count} =await conexion `UPDATE tareas SET tarea = ${texto}  WHERE id = ${id}`;
+                conexion.end();
+                ok(count);
+
+            }catch(error){ //si falla, la rechaza
+                ko({error : "error en base de datos"});
+
+            }
+        ;
+    });
+}
+
 
 /*leerTareas()
 .then(x => console.log(x))
@@ -61,5 +117,15 @@ nuevaTarea("otra tarea")
 .then (x => console.log(x))
 .catch (x => console.log(x));*/
 
+/*actualizarEstado(1)
+.then(x =>console.log(x))*/
 
-module.exports ={leerTareas,nuevaTarea};
+/*leerTareas(4,"un nuevo texto")
+.then(x =>console.log(x))*/
+
+
+
+
+
+
+module.exports ={leerTareas,nuevaTarea,borrarTarea,actualizarEstado,actualizarTexto};

@@ -9,13 +9,26 @@
 <body>
     <h1>Pruebas</h1>
     <script>
-        let datos = {taera:"nueva tarea"};
-        fetch("/tareas/borrar/hola",{
-            method : "DELETE",
+        let datos = {tarea:"nueva tarea"};
+
+        /*fetch("/tareas",)
            
+        .then(respuesta => respuesta.json())
+        .then(respuesta =>{
+            console.log(respuesta);
+        });*/
+
+
+
+        fetch("/tareas/actualizar/1/7",{
+           method : "PUT",
+           body: JSON.stringify({tarea : "comenzar react"}),
+           headers : {
+            "Content-type" : "application/json" 
+           }
             
         })
-        .then(respuesta => respuesta.text())
+        .then(respuesta => respuesta.json())
         .then(respuesta =>{
             console.log(respuesta);
         });
