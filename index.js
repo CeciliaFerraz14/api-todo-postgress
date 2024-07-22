@@ -1,8 +1,13 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
 const {leerTareas,nuevaTarea,borrarTarea,actualizarEstado,actualizarTexto} = require("./db");
 const servidor = express();
+
+
+servidor.use(cors());
+
 servidor.use(express.json());//va a convertir en objeto cualquier json y lo almacena en el body
 
 if(process.env.PRUEBAS){
